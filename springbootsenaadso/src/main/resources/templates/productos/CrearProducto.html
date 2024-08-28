@@ -1,40 +1,43 @@
-
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Darden Group</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    
-    <!-- Estilos personalizados con la paleta de colores -->
+    <title>Darden Group - Nuevo Producto</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #822D2B;
+            --secondary-color: #EDD9C9;
+            --background-color: #F9EFEC;
+            --text-color: #2E0F18;
+        }
         body {
-            background-color: #F9EFEC; /* Color de fondo del cuerpo de la página */
-            color: #2E0F18; /* Color del texto por defecto */
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+        .container {
+            background-color: white;
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            padding: 16px; /* Ajustado a un 20% menos */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 80%; /* Reducir el ancho a un 80% */
         }
         h2 {
-            color: #822D2B; /* Color del título */
+            color: var(--primary-color);
         }
         .btn-primary {
-            background-color: #822D2B; /* Color de fondo de los botones primarios */
-            border-color: #822D2B; /* Color del borde de los botones primarios */
-        }
-        .btn-primary:hover {
-            background-color: #EDD9C9; /* Color de fondo al pasar el ratón por los botones primarios */
-            border-color: #EDD9C9; /* Color del borde al pasar el ratón por los botones primarios */
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
         }
         .btn-outline-primary {
-            color: #822D2B; /* Color del texto de los botones de outline */
-            border-color: #822D2B; /* Color del borde de los botones de outline */
+            color: var(--primary-color);
+            border-color: var(--primary-color);
         }
         .btn-outline-primary:hover {
-            background-color: #822D2B; /* Color de fondo al pasar el ratón por los botones de outline */
-            color: #F9EFEC; /* Color del texto al pasar el ratón por los botones de outline */
-        }
-        .border {
-            border-color: #822D2B !important; /* Color del borde del contenedor */
+            background-color: var(--primary-color);
+            color: white;
         }
     </style>
 </head>
@@ -42,13 +45,15 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-8 mx-auto rounded border p-4 m-4">
-                <h2 class="text-center mb-5">Nuevo producto</h2>
+            <div class="col-md-8 mx-auto rounded p-4">
+                <h2 class="text-center mb-5">Nuevo Producto</h2>
+
                 <form method="post" enctype="multipart/form-data" th:object="${productoDto}">
+
                     <div class="row mb-3">
                         <label for="nombre" class="col-sm-4 col-form-label">Nombre</label>
                         <div class="col-sm-8">
-                            <input id="nombre" class="form-control" th:field="*{nombre}" name="nombre">
+                            <input id="nombre" class="form-control" th:field="*{nombre}" required>
                             <p th:if="${#fields.hasErrors('nombre')}" th:errorclass="text-danger" th:errors="*{nombre}"></p>
                         </div>
                     </div>
@@ -56,7 +61,7 @@
                     <div class="row mb-3">
                         <label for="marca" class="col-sm-4 col-form-label">Marca</label>
                         <div class="col-sm-8">
-                            <input id="marca" class="form-control" th:field="*{marca}">
+                            <input id="marca" class="form-control" th:field="*{marca}" required>
                             <p th:if="${#fields.hasErrors('marca')}" th:errorclass="text-danger" th:errors="*{marca}"></p>
                         </div>
                     </div>
@@ -64,7 +69,7 @@
                     <div class="row mb-3">
                         <label for="categoria" class="col-sm-4 col-form-label">Categoría</label>
                         <div class="col-sm-8">
-                            <select id="categoria" class="form-select" th:field="*{categoria}">
+                            <select id="categoria" class="form-select" th:field="*{categoria}" required>
                                 <option value="Otros">Otros</option>
                                 <option value="Entrada">Entrada</option>
                                 <option value="Fuerte">Fuerte</option>
@@ -79,7 +84,7 @@
                     <div class="row mb-3">
                         <label for="precio" class="col-sm-4 col-form-label">Precio</label>
                         <div class="col-sm-8">
-                            <input id="precio" class="form-control" type="number" step="0.01" min="0" th:field="*{precio}">
+                            <input id="precio" class="form-control" type="number" step="0.01" min="0" th:field="*{precio}" required>
                             <p th:if="${#fields.hasErrors('precio')}" th:errorclass="text-danger" th:errors="*{precio}"></p>
                         </div>
                     </div>
@@ -87,7 +92,7 @@
                     <div class="row mb-3">
                         <label for="descripcion" class="col-sm-4 col-form-label">Descripción</label>
                         <div class="col-sm-8">
-                            <textarea id="descripcion" class="form-control" th:field="*{descripcion}"></textarea>
+                            <textarea id="descripcion" class="form-control" th:field="*{descripcion}" required></textarea>
                             <p th:if="${#fields.hasErrors('descripcion')}" th:errorclass="text-danger" th:errors="*{descripcion}"></p>
                         </div>
                     </div>
@@ -95,14 +100,14 @@
                     <div class="row mb-3">
                         <label for="archivoImagen" class="col-sm-4 col-form-label">Imagen</label>
                         <div class="col-sm-8">
-                            <input id="archivoImagen" class="form-control" type="file" th:field="*{archivoImagen}" />
-                            <p th:if="${#fields.hasErrors('archivoImagen')}" th:errors="*{archivoImagen}"></p>
+                            <input id="archivoImagen" class="form-control" type="file" th:field="*{archivoImagen}" required />
+                            <p th:if="${#fields.hasErrors('archivoImagen')}" th:errorclass="text-danger" th:errors="*{archivoImagen}"></p>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="offset-sm-4 col-sm-4 d-grid">
-                            <button type="submit" class="btn btn-primary">Enviar</button>
+                            <button type="submit" class="btn btn-primary">Crear Producto</button>
                         </div>
                         <div class="col-sm-4 d-grid">
                             <a class="btn btn-outline-primary" href="/productos" role="button">Cancelar</a>
@@ -113,10 +118,8 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
 
 
