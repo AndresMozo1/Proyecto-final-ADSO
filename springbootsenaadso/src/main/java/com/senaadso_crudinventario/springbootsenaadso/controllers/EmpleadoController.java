@@ -31,7 +31,13 @@ public class EmpleadoController {
     }
 
     @PostMapping
-    public String guardarEmpleado(@ModelAttribute("empleado") Empleado empleado) {
+    public String guardarNuevoEmpleado(@ModelAttribute("empleado") Empleado empleado) {
+        empleadoService.guardarEmpleado(empleado);
+        return "redirect:/empleados";
+    }
+
+    @PostMapping("/{id}")
+    public String actualizarEmpleado(@PathVariable("id") Long id, @ModelAttribute("empleado") Empleado empleado) {
         empleadoService.guardarEmpleado(empleado);
         return "redirect:/empleados";
     }

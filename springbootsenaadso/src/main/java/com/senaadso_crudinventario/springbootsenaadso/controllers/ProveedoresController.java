@@ -23,7 +23,7 @@ public class ProveedoresController {
     // Mostrar lista de proveedores
     @GetMapping
     public String listarProveedores(Model model) {
-        List<Proveedor> proveedores = proveedoresRepository.findAll(); // Usar findAll() de JpaRepository
+        List<Proveedor> proveedores = proveedoresRepository.findAll();
         model.addAttribute("proveedores", proveedores);
         return "proveedores/listarProveedores";
     }
@@ -41,7 +41,7 @@ public class ProveedoresController {
         if (result.hasErrors()) {
             return "proveedores/crearEditarProveedor";
         }
-        proveedoresRepository.save(proveedor); // Usar save() de JpaRepository
+        proveedoresRepository.save(proveedor);
         redirectAttributes.addFlashAttribute("mensaje", "Proveedor creado con éxito.");
         return "redirect:/proveedores";
     }
@@ -49,7 +49,7 @@ public class ProveedoresController {
     // Mostrar formulario para editar un proveedor existente
     @GetMapping("/editar/{id}")
     public String mostrarFormularioEditar(@PathVariable int id, Model model, RedirectAttributes redirectAttributes) {
-        Proveedor proveedor = proveedoresRepository.findById(id).orElse(null); // Usar findById() de JpaRepository
+        Proveedor proveedor = proveedoresRepository.findById(id).orElse(null);
         if (proveedor == null) {
             redirectAttributes.addFlashAttribute("error", "Proveedor no encontrado.");
             return "redirect:/proveedores";
@@ -74,7 +74,7 @@ public class ProveedoresController {
         proveedorExistente.setTelefono(proveedor.getTelefono());
         proveedorExistente.setDireccion(proveedor.getDireccion());
 
-        proveedoresRepository.save(proveedorExistente); // Usar save() de JpaRepository
+        proveedoresRepository.save(proveedorExistente);
         redirectAttributes.addFlashAttribute("mensaje", "Proveedor actualizado con éxito.");
         return "redirect:/proveedores";
     }
@@ -82,7 +82,12 @@ public class ProveedoresController {
     // Eliminar un proveedor
     @GetMapping("/eliminar/{id}")
     public String eliminarProveedor(@PathVariable int id, RedirectAttributes redirectAttributes) {
-        proveedoresRepository.deleteById(id); // Usar deleteById() de JpaRepository
+        Proveedor proveedor = proveedoresRepository.findById(id).orElse(null);
+        if (proveedor == null) {
+            redirectAttributes.addFlashAttribute("error", "Proveedor no encontrado.");
+            return "redirect:/proveedores";
+        }
+        proveedoresRepository.deleteById(id);
         redirectAttributes.addFlashAttribute("mensaje", "Proveedor eliminado con éxito.");
         return "redirect:/proveedores";
     }

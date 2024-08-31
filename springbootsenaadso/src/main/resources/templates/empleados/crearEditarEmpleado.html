@@ -76,9 +76,10 @@
     </nav>
 
     <div class="container">
-        <h1 th:text="${#strings.isEmpty(empleado.id) ? 'Crear Nuevo Empleado' : 'Editar Empleado'}"></h1>
+        <h1 th:text="${empleado.id == null} ? 'Crear Nuevo Empleado' : 'Editar Empleado'"></h1>
         <div class="card">
-            <form th:action="@{${#strings.isEmpty(empleado.id) ? '/empleados/guardar' : '/empleados/actualizar/' + empleado.id}}" th:object="${empleado}" method="post">
+            <!-- Formulario ajustado para manejar creación y actualización -->
+            <form th:action="@{${empleado.id == null} ? '/empleados/guardar' : '/empleados/actualizar'}" th:object="${empleado}" method="post">
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre</label>
                     <input type="text" class="form-control" id="nombre" th:field="*{nombre}" required>
@@ -111,3 +112,5 @@
 </body>
 
 </html>
+
+

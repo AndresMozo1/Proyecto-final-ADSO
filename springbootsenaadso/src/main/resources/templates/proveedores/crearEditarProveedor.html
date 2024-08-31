@@ -76,9 +76,10 @@
     </nav>
 
     <div class="container">
-        <h1 th:text="${#strings.isEmpty(proveedor.id) ? 'Crear Nuevo Proveedor' : 'Editar Proveedor'}"></h1>
+        <h1 th:text="${proveedor.id == null} ? 'Crear Nuevo Proveedor' : 'Editar Proveedor'"></h1>
         <div class="card">
-            <form th:action="@{${#strings.isEmpty(proveedor.id) ? '/proveedores/guardar' : '/proveedores/actualizar/' + proveedor.id}}" th:object="${proveedor}" method="post">
+            <!-- Formulario ajustado para manejar creación y actualización -->
+            <form th:action="@{/proveedores/guardar}" th:object="${proveedor}" method="post">
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre</label>
                     <input type="text" class="form-control" id="nombre" th:field="*{nombre}" required>
