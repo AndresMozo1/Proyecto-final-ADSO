@@ -20,11 +20,17 @@ public class ProveedoresController {
     @Autowired
     private ProveedoresRepository proveedoresRepository;
 
-    // Mostrar lista de proveedores
+    // Mostrar lista de proveedores con búsqueda
     @GetMapping
-    public String listarProveedores(Model model) {
-        List<Proveedor> proveedores = proveedoresRepository.findAll();
+    public String listarProveedores(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
+        List<Proveedor> proveedores;
+        if (keyword != null && !keyword.isEmpty()) {
+            proveedores = proveedoresRepository.findByNombreContainingOrNitContaining(keyword, keyword);
+        } else {
+            proveedores = proveedoresRepository.findAll();
+        }
         model.addAttribute("proveedores", proveedores);
+        model.addAttribute("keyword", keyword);
         return "proveedores/listarProveedores";
     }
 

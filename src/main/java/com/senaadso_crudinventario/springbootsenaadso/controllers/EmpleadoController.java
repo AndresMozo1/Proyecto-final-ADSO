@@ -1,3 +1,5 @@
+
+
 package com.senaadso_crudinventario.springbootsenaadso.controllers;
 
 import com.senaadso_crudinventario.springbootsenaadso.models.Empleado;
@@ -38,7 +40,14 @@ public class EmpleadoController {
 
     @PostMapping("/{id}")
     public String actualizarEmpleado(@PathVariable("id") Long id, @ModelAttribute("empleado") Empleado empleado) {
-        empleadoService.guardarEmpleado(empleado);
+        Empleado empleadoExistente = empleadoService.obtenerEmpleadoPorId(id)
+            .orElseThrow(() -> new IllegalArgumentException("Empleado no encontrado con el ID: " + id));
+        empleadoExistente.setNombre(empleado.getNombre());
+        empleadoExistente.setApellido(empleado.getApellido());
+        empleadoExistente.setCargo(empleado.getCargo());
+        empleadoExistente.setTelefono(empleado.getTelefono());
+        empleadoExistente.setEmail(empleado.getEmail());
+        empleadoService.guardarEmpleado(empleadoExistente);
         return "redirect:/empleados";
     }
 
@@ -55,4 +64,13 @@ public class EmpleadoController {
         empleadoService.eliminarEmpleado(id);
         return "redirect:/empleados";
     }
+
+    @GetMapping("/buscar")
+    public String buscar(@RequestParam("query") String query, Model model) {
+        List<Empleado> empleados = empleadoService.buscarEmpleados(query);
+        model.addAttribute("empleados", empleados);
+        return "empleados/listarEmpleados";
+    }
 }
+
+

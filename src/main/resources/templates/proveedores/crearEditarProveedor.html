@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
@@ -74,6 +74,12 @@
             transform: translateY(-10px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
+
+        /* Ajuste del tamaño del formulario */
+        .form-container {
+            max-width: 600px; /* Ancho ajustado */
+            margin: 0 auto; /* Centrar el formulario */
+        }
     </style>
 </head>
 
@@ -92,7 +98,7 @@
         </div>
     </nav>
 
-    <div class="container">
+    <div class="container form-container">
         <h1 th:text="${proveedor.id == null} ? 'Crear Nuevo Proveedor' : 'Editar Proveedor'"></h1>
         <div class="card">
             <!-- Formulario ajustado para manejar creación y actualización -->
